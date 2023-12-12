@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://d4a2va04kxytr"]
+
+[ext_resource type="Script" path="res://Arena.gd" id="1_5a5rf"]
+[ext_resource type="PackedScene" uid="uid://dwu2thk86pwud" path="res://Player.tscn" id="2_uk45o"]
+[ext_resource type="PackedScene" uid="uid://c02d0whhroxwi" path="res://Enemy.tscn" id="3_sulav"]
+[ext_resource type="FontFile" uid="uid://dim4jwiskutn5" path="res://Font.ttf" id="4_gtgci"]
+
+[sub_resource type="Environment" id="Environment_a3tsh"]
+background_mode = 3
+glow_enabled = true
+glow_bloom = 0.15
+glow_blend_mode = 0
+
+[node name="Arena" type="Node2D"]
+script = ExtResource("1_5a5rf")
+
+[node name="Player" parent="." instance=ExtResource("2_uk45o")]
+position = Vector2(320, 180)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_a3tsh")
+
+[node name="Enemy" parent="." instance=ExtResource("3_sulav")]
+position = Vector2(177, 158)
+
+[node name="Enemy_spawn_timer" type="Timer" parent="."]
+wait_time = 0.549
+autostart = true
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 2.0
+offset_right = 1278.0
+offset_bottom = 140.0
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("4_gtgci")
+theme_override_font_sizes/font_size = 128
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="Enemy_spawn_timer" to="." method="_on_enemy_spawn_timer_timeout"]
